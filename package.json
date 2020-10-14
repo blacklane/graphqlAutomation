@@ -12,6 +12,7 @@
     "apollo-boost": "^0.4.9",
     "graphql": "^15.1.0",
     "graphql-tag": "^2.10.3",
+    "isomorphic-fetch": "^3.0.0",
     "jest": "^26.1.0",
     "node-fetch": "^2.6.0",
     "save": "^2.4.0"

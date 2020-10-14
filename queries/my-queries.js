@@ -6,26 +6,31 @@ const { parse } = require ("graphql")
 
 const retreiveBookings = gql` 
 {
-    bookings(limit: 10, filter: { matching: "a",timeState: upcoming, status: all }) {
-      pageInfo{
-        currentOffset
-        totalPages
-        totalCount
-      }
+  bookings(filter: {timeState: upcoming}) {
       items {
-        id
-        service {
+      id
+      services {
           status
           date
-          passenger {
-            firstName
+          passengers {
+          firstName
+          lastName
           }
-          pickupFlightDesignator {
-            flightNumber
+          pickup	{
+          name
+          address
           }
-        }
+          dropoff	{
+          name
+          address
+          }
+          distance
+          duration
+          category
+          serviceScope
       }
-    }
+      }
+  }
   }
 `;
 
@@ -39,7 +44,7 @@ mutation {
       grantType: ${mutationData.grantType}
     ){
       success,
-      message,
+      errors{message},
       accessToken {
         accessToken
         tokenType
@@ -48,4 +53,18 @@ mutation {
     }
   }
 `;
-module.exports = {retreiveBookings, chauffeurLogin}
+
+const userdetails = gql` 
+{
+  me{
+    uuid,
+    firstName,
+    lastName,
+    email,
+    locale,
+    corporationName
+  }
+}
+`;
+
+module.exports = {retreiveBookings, chauffeurLogin, userdetails}

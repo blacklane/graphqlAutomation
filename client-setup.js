@@ -1,17 +1,20 @@
-/* This file takes care of the setup
-   If authentication is needed before calling the endpoint
-   it can be added here.
-*/
+const fetch = require ('isomorphic-fetch');
+const {urls} = require('./testdata')
 const ApolloClient = require ("apollo-boost"). default;
-const fetch = require ('node-fetch')
-const apolloGraphQLClient = (accountDetails) => { 
-return new ApolloClient ({ 
-    uri: accountDetails.url, 
+
+const apolloGraphQLClient = () => { 
+  return new ApolloClient ({ 
+    uri: urls.test_env, 
     fetch: fetch, 
+    headers: { 
+      Authorization: `Bearer qJUdE9JeSC2SulvhraQjz3MMfJdOuWUs`, 
+      UserType: "guest"
+    }, 
     request: (operation) => { 
       operation.setContext ({ 
       }); 
     }, 
   }) ; 
 };
+
 module.exports = {apolloGraphQLClient};

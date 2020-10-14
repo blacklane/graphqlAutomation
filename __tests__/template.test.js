@@ -1,41 +1,35 @@
 // Write the tests here
-const {urls} = require("../testdata")
 const {apolloGraphQLClient} = require ("../client-setup"); 
-const {retreiveBookings, chauffeurLogin} = require ("../queries/my-queries");
+const {retreiveBookings, userdetails} = require ("../queries/my-queries");
+//const {fetchtoken} = require("../fetchToken")
 let client;
 
-const accountDetails = { 
-  url: urls.test_env
-};
+/*const accountDetails = { 
+  token: fetchtoken()
+};*/
 describe ("Tests the bookings query", () => { 
   beforeAll (() => { 
-    client = apolloGraphQLClient (accountDetails); 
+    client = apolloGraphQLClient (); 
   });
 test ("Fetches all the bookings", async () => { 
     const graphQLdata = await client.query ({ 
       query: retreiveBookings, 
     }); 
     expect (graphQLdata) .toBeTruthy (); 
-    console.log(graphQLdata.data.bookings.items[1].id);
+    console.log(graphQLdata.data.bookings.items[0].id);
   }); 
 });
 
-describe ("Test Chauffeur Login Endpoint", () => { 
+describe ("Tests the user details query", () => { 
   beforeAll (() => { 
-    client = apolloGraphQLClient (accountDetails); 
+    client = apolloGraphQLClient (); 
   });
-  test ("it should have success value as true", async () => { 
-    const graphQLdata = await client.mutate ({ 
-      mutation: chauffeurLogin,
+test ("Fetches the user information", async () => { 
+    const graphQLdata = await client.query ({ 
+      query: userdetails, 
     }); 
     expect (graphQLdata) .toBeTruthy (); 
-    expect(graphQLdata.data.chauffeurLogin.success).toBe(true);
-  }); 
-  test ("it should return a bearer token", async () => { 
-    const graphQLdata = await client.mutate ({ 
-      mutation: chauffeurLogin,
-    }); 
-    expect (graphQLdata) .toBeTruthy (); 
-    expect(graphQLdata.data.chauffeurLogin.accessToken.tokenType).toBe('bearer');
+    console.log(graphQLdata.data.me.firstname);
+    expect(graphQLdata.data.me.firstName).toBe('prashant');
   }); 
 });
