@@ -20,4 +20,9 @@ const mutationData = {
     grantType: "implicit"
 }
 
-module.exports = {urls, mutationData, fetchTokenData}
+const names = {
+    firstname: 'prashant',
+    lastname: 'tiwari'
+}
+
+module.exports = {urls, mutationData, fetchTokenData, names}
